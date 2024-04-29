@@ -3,11 +3,10 @@ pipeline {
 
      stages {
 
-        stage('Build') {
+        stage('Hello') {
            steps {
-              echo 'Eyyy, esto es Python. No hay que compilar nada!!!'
-	          echo WORKSPACE
-              sh 'ls -la'
+              echo 'Hello World'
+	       
            }
         }
      }
