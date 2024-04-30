@@ -33,7 +33,7 @@ parallel {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     bat '''
                         set PYTHONPATH=%WORKSPACE%
-			set path=C:\Python\Python312;C:\Python\Python312\Scripts;
+			set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
                         pytest test\\unit
                     '''
                     }
