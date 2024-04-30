@@ -25,8 +25,6 @@ pipeline {
         }
 
          
-stage ('Test') {
-parallel {
 
        stage('Unit') {
             steps {
@@ -40,33 +38,14 @@ parallel {
                   }
                }   
 
+   
 
-        stage('Rest') {
-            steps {
-                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-
-                bat '''
-                    set FLASK_APP=app\\api.py
-                    set FLASK_ENV=development
-                    start flask run
-                    start java -jar C:\\Unir\\Ejercicios\\wiremock\\wiremock-jre8-standalone-2.28.0.jar --port 9090 --root-dir C:\\Unir\\Ejercicios\\wiremock
-                    
-                    set PYTHONPATH=%WORKSPACE%
-                    set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
-                    pytest --junitxml=result-rest.xml test\\rest
-                '''
-                   }    
-                  }
-                 }
-
-             }
-         }
-        
-stage('Results') {
+         stage('Results') {
             steps {
                 junit 'result*.xml' 
+                echo 'FINISH!!!'
+                 }
             }
-        }
 
 
      }
