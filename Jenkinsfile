@@ -34,7 +34,7 @@ parallel {
                     bat '''
                         set PYTHONPATH=%WORKSPACE%
 			set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
-                        pytest test\\unit
+                        pytest --junitxml=result-unit.xml test\\unit
                     '''
                     }
                   }
@@ -52,6 +52,7 @@ parallel {
                     start java -jar C:\\Unir\\Ejercicios\\wiremock\\wiremock-jre8-standalone-2.28.0.jar --port 9090 --root-dir C:\\Unir\\Ejercicios\\wiremock
                     
                     set PYTHONPATH=%WORKSPACE%
+                    set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
                     pytest --junitxml=result-rest.xml test\\rest
                 '''
                    }    
