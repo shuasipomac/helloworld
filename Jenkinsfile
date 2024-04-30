@@ -34,6 +34,7 @@ parallel {
                     bat '''
                         set PYTHONPATH=%WORKSPACE%
 			set path=C:\Python\Python312;C:\Python\Python312\Scripts;
+
                         pytest test\\unit
                     '''
                     }
