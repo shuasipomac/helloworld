@@ -43,12 +43,11 @@ pipeline {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                 bat '''
+                    set PYTHONPATH=.                    
                     set FLASK_APP=app\\api.py
-                    set FLASK_ENV=development
                     start flask run
                     
-
-                    set PYTHONPATH=.
+                    
                     pytest --junitxml=result-rest.xml test\\rest
                 '''
                    }    
