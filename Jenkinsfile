@@ -47,7 +47,7 @@ pipeline {
                     start flask run
                     
 
-                    set PYTHONPATH=%WORKSPACE%
+                    set PYTHONPATH=.
                     set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
                     pytest --junitxml=result-rest.xml test\\rest
                 '''
