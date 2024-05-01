@@ -44,6 +44,7 @@ pipeline {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                 bat '''
                     set FLASK_APP=app\\api.py
+                    set FLASK_ENV=development
                     start flask run
                     
 
