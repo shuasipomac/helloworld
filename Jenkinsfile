@@ -49,8 +49,7 @@ pipeline {
                    
                     start Java -jar C:\\CLON\\wiremock\\wiremock-standalone-3.5.3.jar --port 9090 --root-dir test\\wiremock
 
-                    set PYTHONPATH=.  
-                    set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
+                    set PYTHONPATH=%WORKSPACE%  
                     pytest --junitxml=result-rest.xml test/rest
                 '''
                    }    
