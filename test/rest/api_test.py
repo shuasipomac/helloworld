@@ -7,7 +7,7 @@ import pytest
 
 BASE_URL = "http://localhost:5000"
 BASE_URL_MOCK = "http://localhost:9090"
-BASE_URL_MOCK2 = "http://localhost:9091"
+BASE_URL_2 = "http://localhost:9091"
 DEFAULT_TIMEOUT = 2  # in secs
 
 @pytest.mark.api
@@ -36,13 +36,13 @@ class TestApi(unittest.TestCase):
             response.read().decode(), "8", "ERROR SQRT"
         )
     def test_api_multiply(self):
-        url = f"{BASE_URL_MOCK2}/calc/multiply/2/5"
+        url = f"{BASE_URL_2}/calc/multiply/2/2"
         response = urlopen(url, timeout=DEFAULT_TIMEOUT)
         self.assertEqual(
             response.status, http.client.OK, f"Error en la petición API a {url}"
         )
         self.assertEqual(
-            response.read().decode(), "10", "ERROR MULTIPLY"
+            response.read().decode(), "4", "ERROR MULTIPLY"
         )
 
 
