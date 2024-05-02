@@ -3,12 +3,7 @@ pipeline {
 
      stages {
 
-        stage('Hello') {
-           steps {
-              echo 'Hello World'	 
-              }
-           }
-
+        
         stage('Get Code') {
             steps {
                 // Trae todo el código fuente del repositorio
@@ -25,7 +20,7 @@ pipeline {
         }
 
          
-       stage ('Test') {
+       stage ('Tests') {
        parallel {
 
        stage('Unit') {
