@@ -2,8 +2,7 @@ pipeline {
     agent any
 
      stages {
-
-        
+       
         stage('Get Code') {
             steps {
                 // Trae todo el código fuente del repositorio
@@ -19,7 +18,7 @@ pipeline {
            }
         }
 
-         
+    
        stage ('Tests') {
        parallel {
 
