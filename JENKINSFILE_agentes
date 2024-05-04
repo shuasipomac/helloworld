@@ -1,0 +1,105 @@
+pipeline {
+     agent none
+
+     stages {
+       
+        stage('Get Code') {
+            agent any
+            steps {
+                // Trae todo el código fuente del repositorio
+                git 'https://github.com/shuasipomac/helloworld.git'
+                
+                bat 'set PYTHONPATH=%WORKSPACE%'
+                stash includes: 'app/**', name: 'carpetaapp'
+                stash includes: 'test/**', name: 'carpetatest'
+            
+            }
+        }
+
+        stage('Build') {
+          agent any
+           steps {
+              echo 'No hay código para compilar'
+	      echo WORKSPACE
+              bat 'dir'
+           }
+        }
+
+    
+       stage ('Tests') {
+       parallel {
+
+       stage('Unit') {
+           
+           agent {
+                        label 'Unit'
+                    }
+           
+            steps {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    
+                    unstash 'carpetaapp'
+                    unstash 'carpetatest'
+                    bat '''
+                    
+                       whoami
+                       hostname
+                        set PYTHONPATH=%WORKSPACE%
+			set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
+                        pytest --junitxml=result-unit.xml test/unit
+                    '''
+                        stash includes: 'result-unit.xml', name: 'ResultadosUnit'
+                    
+                    }
+                  }
+               }   
+
+   
+        stage('Rest') {
+            agent {
+                label 'Rest'
+            }
+            
+            steps {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    
+                unstash 'carpetaapp'
+                unstash 'carpetatest'
+                bat '''    
+                
+                    whoami
+                    hostname
+                    set FLASK_APP=app\\api.py
+                    start /B flask run
+                    start Java -jar C:\\CLON\\wiremock\\wiremock-standalone-3.5.3.jar --port 9090 --root-dir test\\wiremock
+
+                    set PYTHONPATH=%WORKSPACE%  
+                    pytest --junitxml=result-rest.xml test/rest
+                '''
+                    stash includes: 'result-rest.xml', name: 'ResultadosRest'
+                
+                   }    
+                  }
+                 }
+
+             }
+         }
+
+
+         stage('Results') {
+            agent any
+            
+            steps {
+                
+                unstash 'ResultadosUnit'
+                unstash 'ResultadosRest'
+                
+                junit 'result*.xml' 
+                echo 'FINISH!!!'
+                 
+                 }
+            }
+
+
+     }
+}
