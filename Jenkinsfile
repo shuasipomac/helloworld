@@ -29,6 +29,7 @@ pipeline {
                         set PYTHONPATH=%WORKSPACE%
 			set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
                         pytest --junitxml=result-unit.xml test/unit
+			
                     '''
                     }
                   }
