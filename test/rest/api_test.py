@@ -2,6 +2,7 @@ import http.client
 import os
 import unittest
 from urllib.request import urlopen
+from urllib.error import HTTPError
 
 import pytest
 
@@ -54,6 +55,16 @@ class TestApi(unittest.TestCase):
         self.assertEqual(
             response.read().decode(), "1", "ERROR DIVIDE"
         )
+
+    def test_api_divide_0(self):
+        url = f"{BASE_URL}/calc/divide/2/0"
+        try:
+            response = urlopen(url, timeout=DEFAULT_TIMEOUT)
+            self.fail("Expected HTTPError")
+        except HTTPError as e:
+            self.assertEqual(
+                e.code, http.client.NOT_ACCEPTABLE, f"Error en el código de estado: {e.code}"
+            )
 
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
