@@ -99,7 +99,13 @@ pipeline {
                  
                  }
             }
-
-
      }
+
+post {
+        always {
+            deleteDir() // Limpia todos los workspaces al final del pipeline
+        }
+    }
+
+
 }
