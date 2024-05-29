@@ -16,11 +16,9 @@ pipeline {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     bat '''
                         set PYTHONPATH=%WORKSPACE%
-			            set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
-                        
+			set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
                         coverage run --branch --source=app --omit=app\\__init__.py,app\\api.py -m pytest --junitxml=result-unit.xml test\\unit
-                     
-                    '''
+                     '''
                         junit 'result-unit.xml' 
                 }
             }
