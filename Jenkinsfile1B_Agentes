@@ -98,7 +98,7 @@ pipeline {
                            hostname
                            whoami
                            set PYTHONPATH=%WORKSPACE%
-        			       set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
+        		   set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;
                            bandit --exit-zero -r . -f custom -o bandit.out --severity-level medium --msg-template "{abspath}:{line}: [{test_id}] {msg}"
                        '''
                        recordIssues tools: [pyLint(name: 'Bandit', pattern: 'bandit.out')], qualityGates : [[threshold: 2, type: 'TOTAL', unstable: true], [threshold: 4, type: 'TOTAL', unstable: false]]
@@ -116,7 +116,7 @@ pipeline {
                           hostname
                           whoami
                           set FLASK_APP=app\\api.py
-        		          set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;C:\\Program Files\\Java\\jdk-11;C:\\Program Files\\Java\\jdk-11\\bin;
+        		  set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;C:\\Program Files\\Java\\jdk-11;C:\\Program Files\\Java\\jdk-11\\bin;
                           start /B cmd /c flask run
                         '''
                           bat 'C:\\apache-jmeter-5.6.3\\apache-jmeter-5.6.3\\bin\\jmeter -n -t test\\jmeter\\flask.jmx -f -l flask.jtl'
