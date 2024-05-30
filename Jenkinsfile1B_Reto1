@@ -23,6 +23,19 @@ pipeline {
             }
         }  
 
+        stage('Cobertura') {
+            steps {
+                bat ''' 
+                    set PYTHONPATH=%WORKSPACE%
+                    set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;C:\\Program Files\\Java\\jdk-11;C:\\Program Files\\Java\\jdk-11\\bin;
+	            coverage xml	
+                '''
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    cobertura coberturaReportFile: 'coverage.xml', conditionalCoverageTargets: '100, 80, 90', failUnstable: false, lineCoverageTargets: '100, 85, 95', onlyStable: false
+                    }
+            }
+        }
+
  	stage('Rest') {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
@@ -38,20 +51,7 @@ pipeline {
                 }  
             }
         }
-
-        stage('Cobertura') {
-            steps {
-                bat ''' 
-                    set PYTHONPATH=%WORKSPACE%
-                    set path=C:\\Python\\Python312;C:\\Python\\Python312\\Scripts;C:\\Program Files\\Java\\jdk-11;C:\\Program Files\\Java\\jdk-11\\bin;
-	            coverage xml	
-                '''
-                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    cobertura coberturaReportFile: 'coverage.xml', conditionalCoverageTargets: '100, 80, 90', failUnstable: false, lineCoverageTargets: '100, 85, 95', onlyStable: false
-                    }
-            }
-        }
-        
+      
         stage ('Static') {
             steps {
                bat ''' 
